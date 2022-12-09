@@ -1,9 +1,12 @@
+import { useGameContext } from "hooks";
+import { Game, Welcome } from "components";
+
 function App() {
-  return (
-    <div className='App'>
-      <h1 className='font-bold mt-20 text-3xl'>Vite + React</h1>
-    </div>
-  );
+  const { mode } = useGameContext();
+
+  if (!mode) return <Welcome />;
+
+  return <Game />;
 }
 
 export default App;

@@ -1,6 +1,6 @@
 export enum GameMode {
-  AUTO,
-  MANUAL,
+  AUTO = "auto",
+  MANUAL = "manual",
 }
 
 export enum Colors {

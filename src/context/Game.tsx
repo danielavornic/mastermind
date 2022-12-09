@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { Clue, Code, GameMode, Guess } from "types";
 
 interface GameContext {
-  mode: GameMode;
+  mode?: GameMode;
   setMode: (mode: GameMode) => void;
   code?: Code;
   setCode: (code: Code) => void;
@@ -15,7 +15,7 @@ interface GameContext {
 }
 
 export const GameContext = createContext<GameContext>({
-  mode: GameMode.AUTO,
+  mode: undefined,
   setMode: () => {},
   code: undefined,
   setCode: () => {},
@@ -28,7 +28,7 @@ export const GameContext = createContext<GameContext>({
 });
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
-  const [mode, setMode] = useState<GameMode>(GameMode.AUTO);
+  const [mode, setMode] = useState<GameMode>();
   const [code, setCode] = useState<Code>();
   const [guess, setGuess] = useState<Code>();
   const [clue, setClue] = useState<Clue>();

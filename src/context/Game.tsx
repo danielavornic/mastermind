@@ -1,11 +1,13 @@
 import { createContext, useState } from "react";
-import { Clue, Code, GameMode, Guess } from "types";
+import { Clue, Code, Color, GameMode, Guess } from "types";
 
 interface GameContext {
   mode?: GameMode;
   setMode: (mode: GameMode) => void;
   code?: Code;
   setCode: (code: Code) => void;
+  pegColor?: string;
+  setPegColor?: (color: Color) => void;
   guess?: Code;
   setGuess: (guess: Code) => void;
   clue?: Clue;
@@ -19,6 +21,8 @@ export const GameContext = createContext<GameContext>({
   setMode: () => {},
   code: undefined,
   setCode: () => {},
+  pegColor: undefined,
+  setPegColor: () => {},
   guess: undefined,
   setGuess: () => {},
   clue: undefined,
@@ -30,6 +34,7 @@ export const GameContext = createContext<GameContext>({
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [mode, setMode] = useState<GameMode>();
   const [code, setCode] = useState<Code>();
+  const [pegColor, setPegColor] = useState<Color>();
   const [guess, setGuess] = useState<Code>();
   const [clue, setClue] = useState<Clue>();
   const [history, setHistory] = useState<Guess[]>([]);
@@ -41,6 +46,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         setMode,
         code,
         setCode,
+        pegColor,
+        setPegColor,
         guess,
         setGuess,
         history,

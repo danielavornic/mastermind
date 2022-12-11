@@ -12,19 +12,19 @@ export enum Colors {
   PURPLE = "purple",
 }
 
-export enum ClueColor {
+export enum ClueColors {
   WHITE = "white",
   BLACK = "black",
+  TRANSPARENT = "transparent",
 }
 
-export type Color = keyof typeof Colors;
+export type Color = keyof typeof Colors | Colors;
+
+export type ClueColor = keyof typeof ClueColors;
 
 export type Code = Color[];
 
-export type Clue = {
-  color: ClueColor;
-  count: number;
-};
+export type Clue = ClueColor[];
 
 export type Guess = {
   code: Code;

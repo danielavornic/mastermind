@@ -10,21 +10,24 @@ const tailwindColors = {
   yellow: "bg-yellow-500",
   orange: "bg-orange-500",
   purple: "bg-purple-500",
+  "": "bg-transparent",
 };
 
-export const Peg = ({ color }: { color: Color }) => {
-  const { pegColor, setPegColor } = useGameContext();
+interface PegProps extends React.HTMLAttributes<HTMLDivElement> {
+  color?: Color;
+}
+
+export const Peg = ({ color, className, ...props }: PegProps) => {
+  const { pegColor } = useGameContext();
 
   return (
     <div
       className={cn(
-        "w-12 h-12 rounded-full cursor-pointer",
-        tailwindColors[color],
-        {
-          "border-2 border-slate-700": pegColor === color,
-        }
+        className,
+        "w-10 h-10 rounded-full cursor-pointer border border-gray-300",
+        tailwindColors[color]
       )}
-      onClick={() => setPegColor(color)}
+      {...props}
     />
   );
 };

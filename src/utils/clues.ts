@@ -17,15 +17,15 @@ export const getClues = (code: Code, guess: Code): Clue => {
   }
 
   for (let i = 0; i < codeCopy.length; i++) {
-    const codeColor = codeCopy[i];
+    if (codeCopy[i] === null) {
+      continue;
+    }
 
-    if (codeColor) {
-      const guessIndex = guessCopy.indexOf(codeColor);
-      if (guessIndex > -1) {
-        partialMatches++;
-        codeCopy[i] = null;
-        guessCopy[guessIndex] = null;
-      }
+    const guessIndex = guessCopy.indexOf(codeCopy[i]);
+    if (guessIndex !== -1) {
+      partialMatches++;
+      codeCopy[i] = null;
+      guessCopy[guessIndex] = null;
     }
   }
 

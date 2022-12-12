@@ -1,14 +1,8 @@
-import { useEffect } from "react";
-
 import { useGameContext } from "hooks";
-import { Board, Pegs, Row } from "components";
+import { Board, Pegs } from "components";
 
 export const Game = () => {
-  const { mode, setClue } = useGameContext();
-
-  useEffect(() => {
-    setClue(["BLACK", "BLACK", "BLACK", "TRANSPARENT"]);
-  }, [setClue]);
+  const { mode } = useGameContext();
 
   return (
     <div className='min-h-screen bg-base-200'>

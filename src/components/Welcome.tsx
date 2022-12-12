@@ -1,8 +1,19 @@
 import { GameMode } from "types";
 import { useGameContext } from "hooks";
+import { generateCode } from "utils";
 
 export const Welcome = () => {
-  const { setMode } = useGameContext();
+  const { setMode, setCode } = useGameContext();
+
+  const handleModeChange = (mode: GameMode) => {
+    setMode(mode);
+
+    if (mode === GameMode.AUTO) {
+      const code = generateCode();
+      setCode(code);
+      console.log(code);
+    }
+  };
 
   return (
     <div className='hero min-h-screen bg-base-200'>
@@ -13,13 +24,13 @@ export const Welcome = () => {
           <div className='grid grid-cols-2 gap-4 mt-16'>
             <button
               className='btn btn-primary'
-              onClick={() => setMode(GameMode.MANUAL)}
+              onClick={handleModeChange.bind(null, GameMode.MANUAL)}
             >
               Manual
             </button>
             <button
               className='btn btn-primary'
-              onClick={() => setMode(GameMode.AUTO)}
+              onClick={handleModeChange.bind(null, GameMode.AUTO)}
             >
               Auto
             </button>

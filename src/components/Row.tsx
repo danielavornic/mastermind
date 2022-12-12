@@ -1,41 +1,55 @@
-import { useGameContext } from "hooks";
-import { Color, Colors } from "types";
-import { Clues } from "./Clues";
-import { Peg } from "./Peg";
+import { useState } from "react";
 import cn from "classnames";
 
-const CheckButton = () => {
-  const { setGuess, guess } = useGameContext();
-
-  return (
-    <button className='btn btn-sm' onClick={() => setGuess(guess)}>
-      Check
-    </button>
-  );
-};
+import { ClueColors, Code, Color } from "types";
+import { useGameContext } from "hooks";
+import { CheckButton, Peg, Clues } from "components";
 
 interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
-  colors?: Color[];
+  colors?: Code;
+  clueColors?: ClueColors[];
   isLast?: boolean;
+  isActive?: boolean;
 }
 
-export const Row = ({ colors, isLast }: RowProps) => {
-  const codeColors = colors || Array.from({ length: 4 }).map(() => undefined);
+export const Row = ({ colors, clueColors, isLast, isActive }: RowProps) => {
+  const { pegColor, updateGuess } = useGameContext();
+
+  const isNotDisabled = isActive && !colors?.includes(undefined);
 
   return (
     <div
       className={cn(
-        "flex flex-row space-x-6 py-2 px-4 items-center justify-cente",
-        { "border-b border-gray-300": !isLast }
+        "flex flex-row space-x-6 py-2 px-4 items-center justify-center",
+        {
+          "border-b border-gray-400": !isLast,
+          "rounded-b-md": isLast,
+          "bg-gray-50": isActive,
+        }
       )}
     >
-      <div className='flex flex-row space-x-2 pr-6 border-r border-gray-300'>
-        {codeColors.map((color, index) => (
-          <Peg key={index} color={color} />
-        ))}
+      <div
+        className={cn("flex flex-row space-x-2 pr-6 border-r border-gray-400", {
+          "pointer-events-none": !isActive,
+        })}
+      >
+        {colors.map((color, index) => {
+          const [col, setCol] = useState<Color>(color);
+          return (
+            <Peg
+              key={index}
+              color={col}
+              onClick={() => {
+                setCol(pegColor);
+                updateGuess(index);
+              }}
+            />
+          );
+        })}
       </div>
-      <CheckButton />
-      <Clues />
+
+      <CheckButton isDisabled={!isNotDisabled} />
+      <Clues colors={clueColors} />
     </div>
   );
 };

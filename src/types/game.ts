@@ -3,7 +3,7 @@ export enum GameMode {
   MANUAL = "manual",
 }
 
-export enum Colors {
+export enum PegColors {
   RED = "red",
   GREEN = "green",
   BLUE = "blue",
@@ -13,18 +13,15 @@ export enum Colors {
 }
 
 export enum ClueColors {
-  WHITE = "white",
-  BLACK = "black",
-  TRANSPARENT = "transparent",
+  EXACT = "exact",
+  PARTIAL = "partial",
 }
 
-export type Color = keyof typeof Colors | Colors;
-
-export type ClueColor = keyof typeof ClueColors;
+export type Color = keyof typeof PegColors | PegColors;
 
 export type Code = Color[];
 
-export type Clue = ClueColor[];
+export type Clue = ClueColors[];
 
 export type Guess = {
   code: Code;

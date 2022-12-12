@@ -1,17 +1,20 @@
 import { useGameContext } from "hooks";
-import { Row } from "./Row";
+import { Row } from "components";
 
 export const Board = () => {
-  const { history } = useGameContext();
+  const { history, currentRow } = useGameContext();
 
   return (
-    <div className='flex flex-col mx-auto border border-gray-300 w-fit rounded-md bg-gray-100'>
-      {Array.from({ length: 10 - history.length }).map((_, index) => (
-        <Row key={index} isLast={index === 9 - history.length} />
+    <div className='flex flex-col mx-auto border border-gray-400 w-fit rounded-md bg-gray-200'>
+      {history.map((row, index) => (
+        <Row
+          key={index}
+          colors={row.code}
+          clueColors={row.clue}
+          isActive={index === 9 - currentRow}
+          isLast={index === history.length - 1}
+        />
       ))}
-
-      {!!history?.length &&
-        history?.map((row, index) => <Row key={index} colors={row.code} />)}
     </div>
   );
 };

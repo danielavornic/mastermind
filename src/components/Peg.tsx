@@ -1,7 +1,6 @@
 import cn from "classnames";
 
 import { Color } from "types";
-import { useGameContext } from "hooks";
 
 const tailwindColors = {
   red: "bg-red-500",
@@ -17,17 +16,13 @@ interface PegProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: Color;
 }
 
-export const Peg = ({ color, className, ...props }: PegProps) => {
-  const { pegColor } = useGameContext();
-
-  return (
-    <div
-      className={cn(
-        className,
-        "w-10 h-10 rounded-full cursor-pointer border border-gray-300",
-        tailwindColors[color]
-      )}
-      {...props}
-    />
-  );
-};
+export const Peg = ({ color, className, ...props }: PegProps) => (
+  <div
+    className={cn(
+      className,
+      "w-10 h-10 rounded-full cursor-pointer border border-gray-400",
+      tailwindColors[color]
+    )}
+    {...props}
+  />
+);

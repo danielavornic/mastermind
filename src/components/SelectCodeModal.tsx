@@ -8,7 +8,7 @@ import { Peg, Pegs } from "components";
 const initialCode = Array.from({ length: 4 }).map(() => undefined);
 
 export const SelectCodeModal = () => {
-  const { mode, status, code, setCode } = useGameContext();
+  const { mode, status, code, setCode, resetHistory } = useGameContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [localCode, setLocalCode] = useState<Code>(initialCode);
@@ -51,9 +51,15 @@ export const SelectCodeModal = () => {
         </div>
 
         <div className='modal-action'>
+          <button className='btn btn-ghost' onClick={() => resetHistory()}>
+            Cancel
+          </button>
+
           <label
             htmlFor='game-modal'
-            className='btn'
+            className={cn("btn", {
+              "btn-disabled": localCode.includes(undefined),
+            })}
             onClick={() => setCode(localCode)}
           >
             Set Code

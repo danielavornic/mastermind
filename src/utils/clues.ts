@@ -41,12 +41,7 @@ export const getClues = (code: Code, guess: Code): Clue => {
     clues.push(undefined);
   }
 
-  const randomizedClues = clues.map((clue) => {
-    const randomIndex = Math.floor(Math.random() * clues.length);
-    const randomClue = clues[randomIndex];
-    clues[randomIndex] = clue;
-    return randomClue;
-  });
+  const randomizedClues = clues.sort(() => Math.random() - 0.5);
 
   return randomizedClues;
 };

@@ -1,8 +1,8 @@
 import { useGameContext } from "hooks";
-import { Board, GameOverModal, Pegs } from "components";
+import { Board, GameOverModal, Pegs, SelectCodeModal } from "components";
 
 export const Game = () => {
-  const { mode } = useGameContext();
+  const { mode, setPegColor, pegColor } = useGameContext();
 
   return (
     <>
@@ -16,11 +16,12 @@ export const Game = () => {
 
         <div className='flex flex-col items-center space-y-6'>
           <Board />
-          <Pegs />
+          <Pegs onClick={setPegColor} activeColor={pegColor} />
         </div>
       </div>
 
       <GameOverModal />
+      <SelectCodeModal />
     </>
   );
 };

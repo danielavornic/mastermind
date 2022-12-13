@@ -6,3 +6,4 @@ export * from "./Clues";
 export * from "./Peg";
 export * from "./Pegs";
 export * from "./CheckButton";
+export * from "./GameOverModal";

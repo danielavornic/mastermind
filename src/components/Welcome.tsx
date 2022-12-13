@@ -1,12 +1,13 @@
-import { GameMode } from "types";
+import { GameMode, GameStatus } from "types";
 import { useGameContext } from "hooks";
 import { generateCode } from "utils";
 
 export const Welcome = () => {
-  const { setMode, setCode } = useGameContext();
+  const { setMode, setCode, setStatus } = useGameContext();
 
   const handleModeChange = (mode: GameMode) => {
     setMode(mode);
+    setStatus(GameStatus.IN_PROGRESS);
 
     if (mode === GameMode.AUTO) {
       const code = generateCode();

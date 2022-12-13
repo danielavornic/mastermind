@@ -27,3 +27,10 @@ export type Guess = {
   code: Code;
   clue: Clue;
 };
+
+export enum GameStatus {
+  NOT_STARTED = "not-started",
+  IN_PROGRESS = "in-progress",
+  WON = "won",
+  LOST = "lost",
+}

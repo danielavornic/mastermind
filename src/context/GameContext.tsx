@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 
-import { Code, Color, PegColors, GameMode, Guess } from "types";
+import { Code, Color, PegColors, GameMode, Guess, GameStatus } from "types";
 import { getClues } from "utils";
 
 interface GameContext {
   mode?: GameMode;
   setMode: (mode: GameMode) => void;
+  status: GameStatus;
+  setStatus: (status: GameStatus) => void;
   code?: Code;
   setCode: (code: Code) => void;
   pegColor?: Color;
@@ -16,11 +18,14 @@ interface GameContext {
   currentRow?: number;
   setCurrentRow?: (row: number) => void;
   updateGuess?: (index: number) => void;
+  resetHistory?: () => void;
 }
 
 export const GameContext = createContext<GameContext>({
   mode: undefined,
   setMode: () => {},
+  status: GameStatus.IN_PROGRESS,
+  setStatus: () => {},
   code: undefined,
   setCode: () => {},
   pegColor: undefined,
@@ -31,6 +36,7 @@ export const GameContext = createContext<GameContext>({
   currentRow: undefined,
   setCurrentRow: () => {},
   updateGuess: () => {},
+  resetHistory: () => {},
 });
 
 const defaultColors = Array.from({ length: 4 }).map(() => undefined);
@@ -42,6 +48,7 @@ const initialHistory = Array.from({ length: 10 }).map(() => ({
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [mode, setMode] = useState<GameMode>();
+  const [status, setStatus] = useState<GameStatus>(GameStatus.IN_PROGRESS);
   const [code, setCode] = useState<Code>();
   const [pegColor, setPegColor] = useState<Color>();
   const [history, setHistory] = useState<Guess[]>(initialHistory);
@@ -81,8 +88,26 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       });
     });
 
+    if (currentRow === 9) {
+      setStatus(GameStatus.LOST);
+      return;
+    }
+
+    if (history[9 - currentRow].code.join("") === code?.join("")) {
+      setStatus(GameStatus.WON);
+      return;
+    }
+
     setCurrentRow((prevRow) => prevRow + 1);
     setPegColor(undefined);
+  };
+
+  const resetHistory = () => {
+    setMode(undefined);
+    setPegColor(undefined);
+    setHistory(initialHistory);
+    setCurrentRow(0);
+    setStatus(GameStatus.NOT_STARTED);
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -121,6 +146,8 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         mode,
         setMode,
+        status,
+        setStatus,
         code,
         setCode,
         pegColor,
@@ -131,6 +158,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
         currentRow,
         setCurrentRow,
         updateGuess,
+        resetHistory,
       }}
     >
       {children}

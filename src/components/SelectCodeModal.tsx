@@ -14,21 +14,25 @@ export const SelectCodeModal = () => {
   const [localCode, setLocalCode] = useState<Code>(initialCode);
   const [color, setColor] = useState<PegColors>(undefined);
 
-  useEffect(() => {
-    setIsOpen(
-      status === GameStatus.IN_PROGRESS && mode === GameMode.MANUAL && !code
-    );
-
-    if (code) console.log(code);
-
-    return () => setIsOpen(false);
-  }, [status, code]);
-
   const handlePegClick = (index: number) => {
     const newCode = [...localCode];
     newCode[index] = color;
     setLocalCode(newCode);
   };
+
+  const handleSubmit = () => {
+    setCode(localCode);
+    setLocalCode(initialCode);
+    console.log(localCode);
+  };
+
+  useEffect(() => {
+    setIsOpen(
+      status === GameStatus.IN_PROGRESS && mode === GameMode.MANUAL && !code
+    );
+
+    return () => setIsOpen(false);
+  }, [status, code]);
 
   return (
     <div
@@ -60,7 +64,7 @@ export const SelectCodeModal = () => {
             className={cn("btn", {
               "btn-disabled": localCode.includes(undefined),
             })}
-            onClick={() => setCode(localCode)}
+            onClick={() => handleSubmit()}
           >
             Set Code
           </label>

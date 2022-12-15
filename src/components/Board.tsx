@@ -13,6 +13,7 @@ export const Board = () => {
           clueColors={row.clue}
           isActive={index === 9 - currentRow}
           isLast={index === history.length - 1}
+          isFirst={index === 0}
         />
       ))}
     </div>

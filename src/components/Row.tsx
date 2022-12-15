@@ -9,10 +9,17 @@ interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
   colors?: Code;
   clueColors?: ClueColors[];
   isLast?: boolean;
+  isFirst?: boolean;
   isActive?: boolean;
 }
 
-export const Row = ({ colors, clueColors, isLast, isActive }: RowProps) => {
+export const Row = ({
+  colors,
+  clueColors,
+  isFirst,
+  isLast,
+  isActive,
+}: RowProps) => {
   const { pegColor, updateGuess } = useGameContext();
 
   const isNotDisabled = isActive && !colors?.includes(undefined);
@@ -24,6 +31,7 @@ export const Row = ({ colors, clueColors, isLast, isActive }: RowProps) => {
         {
           "border-b border-gray-400": !isLast,
           "rounded-b-md": isLast,
+          "rounded-t-md": isFirst,
           "bg-gray-50": isActive,
         }
       )}

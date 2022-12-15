@@ -99,7 +99,6 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setCurrentRow((prevRow) => prevRow + 1);
-    setPegColor(undefined);
   };
 
   const resetHistory = () => {

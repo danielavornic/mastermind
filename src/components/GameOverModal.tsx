@@ -6,8 +6,13 @@ import { useGameContext } from "hooks";
 import { Peg } from "components";
 
 export const GameOverModal = () => {
-  const { status, code, resetHistory } = useGameContext();
+  const { status, code, resetHistory, setCode } = useGameContext();
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    resetHistory();
+    setCode(undefined);
+  };
 
   useEffect(() => {
     setIsOpen(status === GameStatus.WON || status === GameStatus.LOST);
@@ -41,7 +46,7 @@ export const GameOverModal = () => {
           <label
             htmlFor='game-modal'
             className='btn'
-            onClick={() => resetHistory()}
+            onClick={() => handleClick()}
           >
             Play Again
           </label>

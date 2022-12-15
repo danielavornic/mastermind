@@ -20,8 +20,11 @@ export const Peg = ({ color, className, ...props }: PegProps) => (
   <div
     className={cn(
       className,
-      "w-10 h-10 rounded-full cursor-pointer border border-gray-400",
-      tailwindColors[color]
+      "w-10 h-10 rounded-full cursor-pointer",
+      tailwindColors[color],
+      {
+        "border border-gray-400": !!!color,
+      }
     )}
     {...props}
   />
